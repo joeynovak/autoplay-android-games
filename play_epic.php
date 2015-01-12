@@ -1,7 +1,7 @@
 <?php
 $commands = array(
     'closeAd' => array(
-        'input touchscreen tap 1830 50'
+        'input touchscreen tap 50 50'
     ),
     'autoPlay' => array(
         'input touchscreen tap 1800 1100'
@@ -11,13 +11,20 @@ $commands = array(
     ),
     'replay' => array(
         'input touchscreen tap 900 1100'
-    )
+    ),
+    'make' => array(
+        'input touchscreen tap 1600 1100'
+    ),
+    'accept' => array(
+        'input touchscreen tap 1200 1100'
+    ),
 
 
 );
 if (!empty($_GET['action'])) {
     if(isset($commands[$_GET['action']])){
-        $out = system('adb shell ' . implode(";", $commands[$_GET['action']]) . ";");
+        $cmd = '"C:\Program Files (x86)\Android\android-sdk\platform-tools\adb" shell ' . implode(";", $commands[$_GET['action']]) . ";";
+        $out = system($cmd);
         var_dump($out);
     }
 } else {
@@ -46,7 +53,7 @@ if (!empty($_GET['action'])) {
         function autoPlay(){
             jQuery('body').append("AutoPlay");
             jQuery('[value=autoPlay]').click();
-            setTimeout(spinWheel, 28000);
+            setTimeout(spinWheel, 35000);
         }
 
         function spinWheel(){
@@ -58,22 +65,42 @@ if (!empty($_GET['action'])) {
         function replay(){
             jQuery('body').append("Replay");
             jQuery('[value=replay]').click();
-            setTimeout(closeAd, 7000);
+            setTimeout(closeAd, 15000);
         }
 
         function closeAd(){
             jQuery('body').append("Close Ad");
             jQuery('[value=closeAd]').click();
-            setTimeout(closePotionsIfOpened, 1000);
+            setTimeout(closeAd2, 1000);
         }
+
+        function closeAd2(){
+            jQuery('body').append("Close Ad");
+            jQuery('[value=closeAd]').click();
+            setTimeout(autoPlay, 5000);
+        }
+
 
         function closePotionsIfOpened(){
             jQuery('body').append("Close Potions");
             jQuery('[value=spinWheel]').click();
             setTimeout(autoPlay, 700);
         }
+
+        function make(){
+            jQuery('body').append("Making");
+            jQuery('[value=make]').click();
+            setTimeout(accept, 6000);
+        }
+
+        function accept(){
+            jQuery('body').append("Accepting");
+            jQuery('[value=accept]').click();
+            setTimeout(make, 1000);
+        }
     </script>
     <input type="button" value="Auto Play" onClick="autoPlay(); return false;"/>
+    <input type="button" value="Auto Make" onClick="make(); return false;"/>
     <form method="get">
         <input type="text" name="action" value="">
         <br/>
