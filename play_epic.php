@@ -65,13 +65,13 @@ if (!empty($_GET['action'])) {
         function autoPlay(){
             jQuery('body').append("AutoPlay");
             jQuery('[value=autoPlay]').click();
-            setTimeout(spinWheel, 35000);
+            setTimeout(spinWheel, 30000);
         }
 
         function spinWheel(){
             jQuery('body').append("Spinning Wheel");
             jQuery('[value=spinWheel]').click();
-            setTimeout(replay, 3500);
+            setTimeout(replay, 5000);
         }
 
         function replay(){
